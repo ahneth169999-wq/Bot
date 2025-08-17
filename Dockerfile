@@ -1,23 +1,23 @@
 # Use official Python runtime
 FROM python:3.11-slim
 
-# Install ffmpeg (needed for video/audio processing)
+# Install system deps (ffmpeg needed for yt-dlp audio)
 RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set workdir
 WORKDIR /app
 
-# Copy requirements first (better cache layer)
+# Copy dependencies
 COPY requirements.txt .
 
-# Install dependencies
+# Install Python deps
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the code (this brings bot.py inside the container)
+# Copy project files
 COPY . .
 
-# Set environment variables (Railway will inject your BOT_TOKEN automatically)
-ENV PYTHONUNBUFFERED=1
+# Expose port (Render assigns PORT dynamically)
+EXPOSE 8000
 
-# Run your bot
+# Run the bot
 CMD ["python", "bot.py"]
