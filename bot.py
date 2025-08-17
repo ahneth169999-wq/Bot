@@ -170,7 +170,7 @@ def main() -> None:
         application.run_webhook(
             listen="0.0.0.0",
             port=PORT,
-            url_path="https://bot-iun3.onrender.com",   # <--- ADD THIS
+            url_path="webhook",   # <--- ADD THIS
             webhook_url=WEBHOOK_URL,
             secret_token=os.getenv("SECRET_TOKEN", ""),
         )
